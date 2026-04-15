@@ -4,45 +4,96 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>당근으로 이동중...</title>
+  <meta name="robots" content="noindex,nofollow" />
   <style>
     body {
       margin: 0;
+      padding: 0;
       background: #fff;
+      color: #111;
       font-family: Arial, sans-serif;
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 100vh;
+      min-height: 100vh;
       text-align: center;
     }
     .wrap {
-      padding: 20px;
+      padding: 24px;
+      max-width: 420px;
+    }
+    h1 {
+      font-size: 24px;
+      margin-bottom: 12px;
+    }
+    p {
+      font-size: 15px;
+      color: #555;
+      line-height: 1.6;
+      margin-bottom: 20px;
     }
     a {
       display: inline-block;
       padding: 14px 18px;
       border-radius: 12px;
-      background: #ff6f0f;
-      color: white;
       text-decoration: none;
       font-weight: bold;
+      background: #ff6f0f;
+      color: white;
     }
   </style>
 </head>
 <body>
   <div class="wrap">
     <h1>당근으로 이동중...</h1>
-    <p>잠시만 기다려주세요.</p>
-    <a href="https://www.daangn.com/kr/local-profile/qoqsbvmt1nux/">
-      직접 열기
+    <p>
+      자동으로 앱 실행을 시도하고 있어.<br>
+      안 열리면 아래 버튼 눌러.
+    </p>
+    <a id="fallbackBtn" href="https://www.daangn.com/kr/local-profile/qoqsbvmt1nux/">
+      당근 웹으로 열기
     </a>
   </div>
 
   <script>
     const webUrl = "https://www.daangn.com/kr/local-profile/qoqsbvmt1nux/";
-    setTimeout(() => {
-      window.location.replace(webUrl);
-    }, 300);
+    const customScheme = "daangn://";
+    const androidIntentUrl =
+      "intent://www.daangn.com/kr/local-profile/qoqsbvmt1nux/#Intent;scheme=https;package=com.towneers.www;S.browser_fallback_url=" +
+      encodeURIComponent(webUrl) +
+      ";end";
+
+    function isAndroid() {
+      return /Android/i.test(navigator.userAgent);
+    }
+
+    function isIOS() {
+      return /iPhone|iPad|iPod/i.test(navigator.userAgent);
+    }
+
+    function openDaangn() {
+      if (isAndroid()) {
+        window.location.href = androidIntentUrl;
+        setTimeout(() => {
+          window.location.href = webUrl;
+        }, 1800);
+        return;
+      }
+
+      if (isIOS()) {
+        window.location.href = customScheme;
+        setTimeout(() => {
+          window.location.href = webUrl;
+        }, 1800);
+        return;
+      }
+
+      window.location.href = webUrl;
+    }
+
+    window.onload = function () {
+      openDaangn();
+    };
   </script>
 </body>
 </html>
