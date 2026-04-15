@@ -5,12 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>당근으로 이동중...</title>
   <meta name="robots" content="noindex,nofollow" />
+
   <style>
     body {
       margin: 0;
-      padding: 0;
       background: #fff;
-      color: #111;
       font-family: Arial, sans-serif;
       display: flex;
       align-items: center;
@@ -27,39 +26,41 @@
       margin-bottom: 12px;
     }
     p {
-      font-size: 15px;
-      color: #555;
-      line-height: 1.6;
+      color: #666;
       margin-bottom: 20px;
+      line-height: 1.6;
     }
     a {
       display: inline-block;
       padding: 14px 18px;
       border-radius: 12px;
+      background: #ff6f0f;
+      color: #fff;
       text-decoration: none;
       font-weight: bold;
-      background: #ff6f0f;
-      color: white;
     }
   </style>
 </head>
+
 <body>
   <div class="wrap">
     <h1>당근으로 이동중...</h1>
     <p>
-      자동으로 앱 실행을 시도하고 있어.<br>
-      안 열리면 아래 버튼 눌러.
+      앱으로 이동을 시도하고 있어요.<br>
+      안되면 아래 버튼 눌러주세요.
     </p>
-    <a id="fallbackBtn" href="https://www.daangn.com/kr/local-profile/qoqsbvmt1nux/">
-      당근 웹으로 열기
+
+    <a href="https://karrot.app/kr/local-profile/qoqsbvmt1nux/">
+      웹으로 열기
     </a>
   </div>
 
   <script>
-    const webUrl = "https://www.daangn.com/kr/local-profile/qoqsbvmt1nux/";
-    const customScheme = "daangn://";
-    const androidIntentUrl =
-      "intent://www.daangn.com/kr/local-profile/qoqsbvmt1nux/#Intent;scheme=https;package=com.towneers.www;S.browser_fallback_url=" +
+    const webUrl = "https://karrot.app/kr/local-profile/qoqsbvmt1nux/";
+    const appScheme = "daangn://";
+
+    const androidIntent =
+      "intent://karrot.app/kr/local-profile/qoqsbvmt1nux/#Intent;scheme=https;package=com.towneers.www;S.browser_fallback_url=" +
       encodeURIComponent(webUrl) +
       ";end";
 
@@ -71,29 +72,37 @@
       return /iPhone|iPad|iPod/i.test(navigator.userAgent);
     }
 
-    function openDaangn() {
+    function openApp() {
       if (isAndroid()) {
-        window.location.href = androidIntentUrl;
+        // 안드: intent로 앱 실행 시도
+        window.location.href = androidIntent;
+
+        // 실패하면 웹 이동
         setTimeout(() => {
           window.location.href = webUrl;
-        }, 1800);
+        }, 1500);
+
         return;
       }
 
       if (isIOS()) {
-        window.location.href = customScheme;
+        // iOS: 스킴으로 앱 실행 시도
+        window.location.href = appScheme;
+
+        // 실패하면 웹 이동
         setTimeout(() => {
           window.location.href = webUrl;
-        }, 1800);
+        }, 1500);
+
         return;
       }
 
+      // PC 등
       window.location.href = webUrl;
     }
 
-    window.onload = function () {
-      openDaangn();
-    };
+    // 페이지 열리자마자 실행
+    window.onload = openApp;
   </script>
 </body>
 </html>
