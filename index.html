@@ -18,14 +18,6 @@
     .wrap {
       padding: 20px;
     }
-    h1 {
-      font-size: 22px;
-      margin-bottom: 10px;
-    }
-    p {
-      color: #555;
-      margin-bottom: 20px;
-    }
     a {
       display: inline-block;
       padding: 14px 18px;
@@ -40,41 +32,17 @@
 <body>
   <div class="wrap">
     <h1>당근으로 이동중...</h1>
-    <p>앱 실행을 시도하고 있어요.<br>안되면 버튼 눌러주세요.</p>
+    <p>잠시만 기다려주세요.</p>
     <a href="https://www.daangn.com/kr/local-profile/qoqsbvmt1nux/">
-      당근 웹으로 열기
+      직접 열기
     </a>
   </div>
 
   <script>
     const webUrl = "https://www.daangn.com/kr/local-profile/qoqsbvmt1nux/";
-    const customScheme = "daangn://";
-    const androidIntent =
-      "intent://www.daangn.com/kr/local-profile/qoqsbvmt1nux/#Intent;scheme=https;package=com.towneers.www;S.browser_fallback_url=" +
-      encodeURIComponent(webUrl) +
-      ";end";
-
-    function isAndroid() {
-      return /Android/i.test(navigator.userAgent);
-    }
-
-    function isIOS() {
-      return /iPhone|iPad|iPod/i.test(navigator.userAgent);
-    }
-
-    function openApp() {
-      if (isAndroid()) {
-        location.href = androidIntent;
-        setTimeout(() => location.href = webUrl, 1500);
-      } else if (isIOS()) {
-        location.href = customScheme;
-        setTimeout(() => location.href = webUrl, 1500);
-      } else {
-        location.href = webUrl;
-      }
-    }
-
-    window.onload = openApp;
+    setTimeout(() => {
+      window.location.replace(webUrl);
+    }, 300);
   </script>
 </body>
 </html>
